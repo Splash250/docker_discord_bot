@@ -4,8 +4,14 @@ This documentation is about setting up a simple Discord bot using Docker contain
 
 ## Setup
 1. **Clone the repository:** Download the project to your local machine.
-2. **Modify the Environment Variables:** Navigate to the `.env` file and modify the token and client id to enable Node.js to connect to your bot. You should also modify the login credentials for phpMyAdmin and MySQL for security reasons. Here is the structure of the `.env` file:
+2. **Modify the Environment Variables:** Create an `.env` file and modify the token and client id that was provided to enable Node.js to connect to your bot. You should also modify the login credentials for phpMyAdmin and MySQL inside the docker-compose.yml file for security reasons. Here is the structure of the `.env` file:
+```txt
+token=MY_TOKEN
+clientId=MY_BOT_ID
+COMPOSE_PROJECT_NAME=my_discord_bot
+```
 
+docker-compose.yml:
 ```yaml
 environment:
       MYSQL_DATABASE: my_discord_bot
