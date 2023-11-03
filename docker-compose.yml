@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  db:
+    container_name: database
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: my_discord_bot
+      MYSQL_USER: user
+      MYSQL_PASSWORD: passwd
+      MYSQL_ROOT_PASSWORD: passwd
+    volumes:
+      - ./dump:/docker-entrypoint-initdb.d
+      - persistent:/var/lib/mysql
+    networks:
+      - bot_lan
+  phpmyadmin:
+    container_name: phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    links:
+      - db:db
+    ports:
+      - 8000:80
+    environment:
+      MYSQL_USER: user
+      MYSQL_PASSWORD: passwd
+      MYSQL_ROOT_PASSWORD: passwd
+    networks:
+      - bot_lan
+
+  node:
+    container_name: node_js
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    command: ["./wait-for-it.sh", "db:3306", "--", "node", "src/index.js"]
+    ports:
+      - '3000:3000'
+    depends_on:
+      - db
+    networks:
+      - bot_lan
+volumes:
+  db_data: {}
+  persistent:
+networks:
+  bot_lan:
+    driver: bridge
+
