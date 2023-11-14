@@ -17,12 +17,12 @@ module.exports = (client) => {
 
         const rest = new REST({
             version: '9'
-        }).setToken(process.env.token);
+        }).setToken(process.env.TOKEN);
 
         (async () => {
             try {
                 await rest.put(
-                    Routes.applicationCommands(process.env.clientId), {
+                    Routes.applicationCommands(process.env.CLIENTID), {
                         body: client.commandArray
                     },
                 );

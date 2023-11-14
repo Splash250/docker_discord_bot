@@ -1,13 +1,18 @@
 const mysql = require('mysql2');
 
+//read the .env file and get the variables
+require('dotenv').config();
+const process = require('node:process');
+
+
 const pool = mysql.createPool({
-  host: 'db', //the name of the service in the docker-compose.yml file
-  user: 'user', 
-  password: 'passwd',
-  database: 'my_discord_bot', //the name of the database you want to connect to
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
+    host: process.env.MYSQL_HOST,
+    user: process.env.MYSQL_USER,
+    database: process.env.MYSQL_DATABASE,
+    password: process.env.MYSQL_PASSWORD,
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0
 });
 
 module.exports = pool.promise();
