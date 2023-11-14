@@ -4,11 +4,10 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 
-RUN npm install
+RUN npm ci
+RUN npm install -g nodemon
+
 
 COPY . .
 
-COPY wait-for-it.sh /usr/src/app/
-RUN chmod +x /usr/src/app/wait-for-it.sh
-
-CMD [ "node", "src/index.js" ]
+ENTRYPOINT ["npm", "run", "dev"]

@@ -37,14 +37,13 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/usr/src/app
-    working_dir: /usr/src/app
-    command: ["./wait-for-it.sh", "db:3306", "--", "node", "src/index.js"]
     ports:
       - '3000:3000'
     depends_on:
       - db
     networks:
       - bot_lan
+      
 volumes:
   db_data: {}
   persistent:
